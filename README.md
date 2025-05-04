@@ -18,3 +18,6 @@
 
 # main.py(FastAPI), app.py(streamlit)の動作確認
 Visual Studio Codeで仮想環境を作成し、3つの学習済モデルをパソコンのフォルダに配置して、uvicornで実行しました。仮想環境にインストールされている全てのパッケージをrequirements.txtに記しました。
+
+# デプロイしたWebアプリ
+Google Cloud Run上にデプロイしたWebアプリは以下です。重いので開くのに時間がかかります。[デプロイしたWebアプリを見る](https://skin-check-488916091193.asia-northeast1.run.app/)
