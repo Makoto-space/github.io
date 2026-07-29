@@ -43,9 +43,7 @@ The deployment version was containerized and published on Google Cloud Run using
 
 ### 1. Skin-image classification
 
-The image classifier was trained with images from the following repository:
-
-- [Photos of skin diseases](https://github.com/Makoto-space/Photos-of-skin-diseases)
+The medical images used in the historical experiment are not redistributed in the public repository. Access to source images is subject to the original providers' licenses, terms of use, privacy requirements, and other applicable restrictions.
 
 Training was performed in Google Colaboratory.
 
@@ -68,31 +66,35 @@ Five Excel files were imported into Google Colaboratory, and 100 case-text examp
 - `requirements.txt`: Python dependencies used in the local verification environment
 - Three trained model files are required for local execution
 
-## Local Execution
+## Historical Local Execution Outline
 
 The following is a general execution outline. Model-file paths and environment-specific settings may need to be adjusted to match the repository configuration.
 
-```bash
+**Note:** The trained model files required by `main.py` and `app.py` are not included. The models are withheld because the historical training medical images were assembled from multiple external sources with differing copyright, licensing, and privacy conditions. The commands below document the historical execution procedure but are not sufficient to run the complete application.
+
+### Windows Command Prompt
+
+```cmd
 python -m venv .venv
-source .venv/bin/activate
+.venv\Scripts\activate.bat
 
 python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
 
-uvicorn main:app --reload
+python -m uvicorn main:app --reload
 ```
 
 Open a second terminal, activate the same virtual environment, and start Streamlit:
 
-```bash
-source .venv/bin/activate
-streamlit run app.py
+```cmd
+.venv\Scripts\activate.bat
+python -m streamlit run app.py
 ```
 
-On Windows Command Prompt, activate the environment with:
+On Linux, macOS, or WSL, activate the virtual environment with:
 
-```text
-.venv\Scripts\activate
+```bash
+source .venv/bin/activate
 ```
 
 ## Compatibility Note
@@ -110,11 +112,15 @@ These versions reflect the historical project environment and may not represent 
 
 ## Demo
 
-A deployment was created on Google Cloud Run:
+An earlier version of this prototype was deployed on Google Cloud Run.
 
-- [Open the deployed prototype](https://skin-check-488916091193.asia-northeast1.run.app/)
+The public demo is currently unavailable because cloud hosting has been discontinued. The source code and project documentation remain availablein this repository.
 
-The service may take time to start, and continued availability is not guaranteed.
+## Application Screenshots
+
+The screenshots show an earlier working version of the application.
+
+The public Google Cloud Run deployment is no longer active. These images are provided to demonstrate the historical user interface and application workflow.
 
 ## Security and Privacy
 
@@ -176,9 +182,7 @@ Anyone with a rash or other health concern should consult a qualified healthcare
 
 ### 発疹画像分類
 
-画像分類には、次のリポジトリに収録した画像を使用しました。
-
-- [皮膚疾患画像リポジトリ](https://github.com/Makoto-space/Photos-of-skin-diseases)
+過去の実験で使用した医療画像は、公開リポジトリでは再配布していません。元画像の利用については、各提供元のライセンス、利用規約、プライバシー要件その他の条件に従う必要があります。
 
 学習はGoogle Colaboratoryで実施しました。
 
@@ -190,9 +194,22 @@ Anyone with a rash or other health concern should consult a qualified healthcare
 
 5カテゴリーについて、各100例の症例テキストを作成し、Google Colaboratoryで学習に使用しました。
 
+### 過去のローカル実行手順
+
+注: main.py と app.py で必要となる学習済みモデルファイルは、本リポジトリには含まれていません。過去の学習に用いた医療画像データは、著作権、ライセンス、プライバシー条件が異なる複数の外部情報源から収集したため、学習済みモデルの公開を控えています。そのため、公開されているファイルだけでは、推論アプリケーションを完全に実行することはできません。
+
 ## プロジェクトの状態
 
 本プロジェクトは以前に作成したポートフォリオ作品であり、現在、新機能の積極的な開発は行っていません。ただし、文書や保守上の軽微な更新を行う場合があります。
+
+## デモ
+
+このプロトタイプの以前のバージョンは、Google Cloud Runへデプロイしていました。現在はクラウドでのホスティングを終了しているため、公開デモは利用できません。ソースコードとプロジェクト文書は、このリポジトリで引き続き閲覧できます。
+
+## アプリケーション画面
+
+掲載したスクリーンショットは、以前正常に動作していたバージョンのアプリケーション画面です。現在、Google Cloud Run上の公開環境は稼働していません。これらの画像は、過去のユーザーインターフェースとアプリケーションの処理の流れを示すために掲載しています。
+
 
 ## 医療上の注意
 
