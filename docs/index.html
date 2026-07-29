@@ -1,57 +1,241 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Skin Disease Candidate Suggestion Web App</title>
 
+  <meta
+    name="description"
+    content="An educational deep learning prototype combining skin images and symptom information to suggest candidate disease categories."
+  >
+
   <style>
+    :root {
+      color-scheme: light;
+      --text: #1f2328;
+      --muted: #57606a;
+      --border: #d0d7de;
+      --surface: #f6f8fa;
+      --primary: #0969da;
+      --primary-hover: #0550ae;
+      --secondary: #57606a;
+      --secondary-hover: #424a53;
+      --notice-bg: #fff5f5;
+      --notice-border: #d1242f;
+      --shadow: 0 8px 24px rgba(140, 149, 159, 0.18);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
-      max-width: 900px;
+      max-width: 980px;
       margin: 0 auto;
-      padding: 40px 24px;
+      padding: 48px 24px;
       font-family:
         -apple-system,
         BlinkMacSystemFont,
         "Segoe UI",
+        "Noto Sans",
+        "Noto Sans JP",
         sans-serif;
       line-height: 1.7;
-      color: #222;
+      color: var(--text);
+      background: #ffffff;
     }
 
     h1,
-    h2 {
+    h2,
+    h3 {
       line-height: 1.3;
     }
 
+    h1 {
+      margin-bottom: 12px;
+      font-size: clamp(2rem, 5vw, 3rem);
+    }
+
+    h2 {
+      margin-top: 0;
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+      font-size: 1.6rem;
+    }
+
+    h3 {
+      margin-bottom: 8px;
+      font-size: 1.15rem;
+    }
+
+    p,
+    ul {
+      margin-top: 0;
+    }
+
+    a {
+      color: var(--primary);
+    }
+
+    header {
+      margin-bottom: 52px;
+    }
+
+    section {
+      margin: 48px 0;
+    }
+
     .subtitle {
-      color: #555;
-      font-size: 1.1rem;
+      max-width: 760px;
+      margin-bottom: 14px;
+      color: var(--muted);
+      font-size: 1.15rem;
+    }
+
+    .lead-ja {
+      max-width: 760px;
+      margin-bottom: 24px;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 24px;
     }
 
     .button {
       display: inline-block;
-      margin: 8px 8px 8px 0;
-      padding: 10px 18px;
-      border-radius: 6px;
-      background: #0969da;
-      color: white;
+      padding: 11px 18px;
+      border-radius: 7px;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
       text-decoration: none;
+      transition:
+        background 0.15s ease,
+        transform 0.15s ease;
+    }
+
+    .button:hover {
+      background: var(--primary-hover);
+      transform: translateY(-1px);
+    }
+
+    .button-secondary {
+      background: var(--secondary);
+    }
+
+    .button-secondary:hover {
+      background: var(--secondary-hover);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      padding: 20px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #ffffff;
+      box-shadow: var(--shadow);
+    }
+
+    .card p:last-child,
+    .card ul:last-child {
+      margin-bottom: 0;
+    }
+
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .tag-list li {
+      padding: 6px 10px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--surface);
+      font-size: 0.92rem;
+    }
+
+    .screenshot-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+
+    figure {
+      margin: 0;
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #ffffff;
+      box-shadow: var(--shadow);
+    }
+
+    figure img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      background: var(--surface);
+    }
+
+    figcaption {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .status,
+    .reproducibility {
+      padding: 20px;
+      border-left: 4px solid var(--primary);
+      background: var(--surface);
     }
 
     .notice {
-      margin-top: 32px;
-      padding: 18px;
-      border-left: 4px solid #d1242f;
-      background: #fff5f5;
+      padding: 20px;
+      border-left: 4px solid var(--notice-border);
+      background: var(--notice-bg);
     }
 
     footer {
-      margin-top: 48px;
-      padding-top: 20px;
-      border-top: 1px solid #ddd;
-      color: #666;
+      margin-top: 56px;
+      padding-top: 22px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 640px) {
+      body {
+        padding: 32px 18px;
+      }
+
+      section {
+        margin: 38px 0;
+      }
+
+      .button {
+        width: 100%;
+        text-align: center;
+      }
     }
   </style>
 </head>
@@ -61,54 +245,160 @@
     <h1>Skin Disease Candidate Suggestion Web App</h1>
 
     <p class="subtitle">
-      Educational and research prototype using deep learning,
-      skin images, and symptom information
+      An educational and research prototype combining deep learning,
+      skin images, and symptom information.
     </p>
 
-    <p>
+    <p class="lead-ja" lang="ja">
       皮膚画像と問診情報を用いて、可能性のある疾患カテゴリーを
       提示する教育・研究目的のディープラーニング試作アプリです。
     </p>
 
-    <a
-      class="button"
-      href="https://github.com/Makoto-space/skin-disease-diagnosis-webapp"
-    >
-      View Source Code
-    </a>
+    <div class="actions">
+      <a
+        class="button"
+        href="https://github.com/Makoto-space/skin-disease-diagnosis-webapp"
+      >
+        View Source Code
+      </a>
+
+      <a
+        class="button button-secondary"
+        href="https://makoto-space.github.io/"
+      >
+        Back to Portfolio
+      </a>
+    </div>
   </header>
 
   <main>
     <section>
+      <h2>Application Screenshots</h2>
+
+      <p>
+        The screenshots below show an earlier working version of the
+        prototype. The public Google Cloud Run deployment is no longer active.
+      </p>
+
+      <div class="screenshot-grid">
+        <figure>
+          <img
+            src="assets/screenshots/01-image-upload-screen.png"
+            alt="Skin-image upload screen"
+            loading="lazy"
+          >
+          <figcaption>
+            Image-upload interface used to submit a skin image for analysis.
+          </figcaption>
+        </figure>
+
+        <figure>
+          <img
+            src="assets/screenshots/02-symptom-questionnaire-1.png"
+            alt="First symptom-questionnaire screen"
+            loading="lazy"
+          >
+          <figcaption>
+            Questionnaire for basic information such as age, sex,
+            body temperature, and rash location.
+          </figcaption>
+        </figure>
+
+        <figure>
+          <img
+            src="assets/screenshots/03-symptom-questionnaire-2.png"
+            alt="Second symptom-questionnaire screen"
+            loading="lazy"
+          >
+          <figcaption>
+            Additional questionnaire items describing symptom distribution,
+            timing, and characteristics.
+          </figcaption>
+        </figure>
+
+        <figure>
+          <img
+            src="assets/screenshots/04-result-screen.png"
+            alt="Prototype model-output screen"
+            loading="lazy"
+          >
+          <figcaption>
+            Example model-output screen for the five supported candidate
+            categories. The displayed values are model outputs, not clinically
+            validated disease probabilities.
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section>
       <h2>Project Overview</h2>
 
       <p>
-        This project explores the use of deep learning models for
-        analyzing skin images and symptom information.
+        This project explores the use of deep learning models to analyze
+        skin images and symptom information.
+      </p>
+
+      <p lang="ja">
+        皮膚疾患に関連する画像分類、画像適格性確認、
+        問診テキスト解析を組み合わせた試作システムです。
       </p>
 
       <p>
-        皮膚疾患に関連する画像分類、画像品質確認、
-        問診テキスト解析を組み合わせた試作システムです。
+        The historical prototype supported five candidate categories:
+        atopic dermatitis, measles, hand, foot, and mouth disease,
+        chickenpox, and herpes zoster.
       </p>
     </section>
 
     <section>
       <h2>Main Features</h2>
 
-      <ul>
-        <li>Skin-image input and preprocessing</li>
-        <li>Image-quality assessment</li>
-        <li>Deep-learning image classification</li>
-        <li>Symptom-text analysis</li>
-        <li>Candidate-category presentation</li>
-      </ul>
+      <div class="grid">
+        <article class="card">
+          <h3>Image Input</h3>
+          <p>
+            Accepts a skin image and applies preprocessing before inference.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>Image Suitability Check</h3>
+          <p>
+            Evaluates whether an input image falls within the intended scope
+            of the prototype.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>Image Classification</h3>
+          <p>
+            Uses a deep-learning image classifier to generate candidate-category
+            output.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>Symptom-Text Analysis</h3>
+          <p>
+            Converts questionnaire responses into text input for a
+            symptom-classification component.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>Candidate Presentation</h3>
+          <p>
+            Displays model output for the five supported candidate categories.
+          </p>
+        </article>
+      </div>
     </section>
 
     <section>
       <h2>Technical Stack</h2>
 
-      <ul>
+      <ul class="tag-list">
         <li>Python</li>
         <li>DenseNet201</li>
         <li>AutoEncoder</li>
@@ -121,12 +411,51 @@
     </section>
 
     <section>
+      <h2>Demo Availability</h2>
+
+      <p>
+        An earlier version of this prototype was deployed on Google Cloud Run.
+      </p>
+
+      <p>
+        The public demo is currently unavailable because cloud hosting has been
+        discontinued. The screenshots on this page show an earlier working
+        version of the application.
+      </p>
+    </section>
+
+    <section class="reproducibility">
+      <h2>Reproducibility and Model Availability</h2>
+
+      <p>
+        The source code, notebooks, application structure, and historical
+        execution instructions are available in the GitHub repository.
+      </p>
+
+      <p>
+        The trained model files are not publicly distributed. Therefore,
+        the complete inference application cannot be run directly from
+        the publicly available files.
+      </p>
+
+      <p>
+        The historical training data were assembled from external sources
+        with differing copyright, licensing, and privacy conditions.
+      </p>
+    </section>
+
+    <section class="status">
       <h2>Project Status</h2>
 
       <p>
-        This is an earlier portfolio project and is not currently
-        under active development. It remains available as a record
-        of my experience in medical AI application development.
+        This is an earlier portfolio project and is not under active feature
+        development. Minor documentation and maintenance updates may still
+        be made.
+      </p>
+
+      <p>
+        The project remains publicly available as a record of my experience
+        in medical AI application development.
       </p>
     </section>
 
@@ -134,15 +463,21 @@
       <h2>Disclaimer</h2>
 
       <p>
-        This project is an educational and research prototype.
-        It is not intended for clinical diagnosis, treatment
-        selection, medical decision-making, or use as a medical device.
+        This project is an educational and research prototype. It is not
+        intended for clinical diagnosis, treatment selection, medical
+        decision-making, or use as a medical device.
       </p>
 
       <p>
+        The displayed model outputs must not be interpreted as clinically
+        validated disease probabilities.
+      </p>
+
+      <p lang="ja">
         本プロジェクトは教育・研究目的の試作です。
-        実際の診断、治療判断、医療機器としての使用を
-        目的としていません。
+        実際の診断、治療方針の決定、受診判断、医療機器としての使用を
+        目的としていません。健康上の問題がある場合は、
+        医師その他の有資格医療専門職へ相談してください。
       </p>
     </section>
   </main>
